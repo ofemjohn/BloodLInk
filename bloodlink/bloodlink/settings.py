@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'backend',  # Make sure 'backend' is included
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 
@@ -131,3 +133,11 @@ STATIC_ROOT = BASE_DIR / "static"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
