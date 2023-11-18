@@ -8,7 +8,7 @@ Dashboard: this is a user-friendly interface where users will be able to read ab
 
 GPS integration: this will be used to link up potential blood recipient users to available and nearest blood banks based on the recipient's location. Also, it will be used to link potential blood donors to the nearest blood bank or a blood recipient in need of a blood donor.
 
-Payment Gateway Integration: This will be used by users to make payments for service charges or subscription renewals. Also, those users that would donate blood for a token will be paid through a payment gateway.
+Payment Gateway Integration: This will be used by users to make payments for service charges or subscription renewals. Also, those users who would donate blood for a token will be paid through a payment gateway.
 
 Blood recipient request portal: this is where potential blood recipients can request blood, which will include the recipient's location, phone number, number of pints of blood needed, preferred source(either from a blood bank or from donors who donate for a token),
 
@@ -21,3 +21,49 @@ Review forms: users, especially blood recipients will be requested to fill out r
 Conclusion
 The blood donation and blood recipient linking site is aimed at helping patients and their relatives to have easy access to safe and quality blood from blood banks and individuals especially in emergency situation without delay. Also, it is to help willing individuals to donate blood to those in need using available blood banks in their location. 
 
+
+User Registration:
+
+Endpoint: /api/register/
+Method: POST
+Functionality: Register a user with necessary information.
+User Login:
+
+Endpoint: /api/login/
+Method: POST
+Functionality: Authenticate the user and provide access tokens.
+User Logout:
+
+Endpoint: /api/logout/
+Method: POST
+Functionality: Log out the user.
+Blood Bank Registration:
+
+Endpoint: /api/bloodbank/register/
+Method: POST
+Functionality: Register a blood bank with its details.
+Donor Registration:
+
+Endpoint: /api/donor/register/
+Method: POST
+Functionality: Register a donor with details and donation type.
+Create Donation Request:
+
+Endpoint: /api/donation/request/
+Method: POST
+Functionality: Create a request for blood.
+Link Blood Request to Donor or Blood Bank:
+
+Endpoint: /api/donation/link/
+Method: POST
+Functionality: Link a donation request to a donor or blood bank.
+Subscribe Blood Bank:
+
+Endpoint: /api/bloodbank/subscribe/
+Method: POST
+Functionality: Allow blood banks to subscribe.
+Payment for Blood Request Linking:
+
+Endpoint: /api/payment/linking/
+Method: POST
+Functionality: Process payment for linking a blood request.
