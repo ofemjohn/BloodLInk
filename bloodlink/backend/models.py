@@ -17,60 +17,62 @@ class UserProfile(models.Model):
         return f"{self.user.username} ({self.user_type})"
 
 
-class BloodType(models.Model):
-    type = models.CharField(max_length=10)
-
-    def __str__(self):
-        return self.type
-
-
 class BloodBank(models.Model):
     name = models.CharField(max_length=255)
     address = models.TextField(default='')
-    contact_information = models.JSONField(default=dict)
-    blood_stock = models.ManyToManyField(BloodType, related_name='hospitals')
+    phone = models.CharField(max_length=15, default='+234 7858559023')
+    services_provided = models.TextField(default='')
+    operational_hours = models.CharField(max_length=255, default='9 AM - 5 PM')
+    # Add more fields as needed
 
     def __str__(self):
         return self.name
 
 
 class Donor(models.Model):
+    DONATION_TYPE_CHOICES = [
+        ('free', 'Free Donation'),
+        ('token', 'Token Donation'),
+    ]
+
     name = models.CharField(max_length=255)
     date_of_birth = models.DateField()
-    contact_information = models.JSONField()
+    phone = models.CharField(max_length=15, default='+234 7858559023')
     address = models.TextField()
-    medical_history = models.TextField()
-    blood_type = models.ForeignKey(
-        BloodType, on_delete=models.CASCADE, related_name='donors')
+    donation_type = models.CharField(
+        max_length=10, choices=DONATION_TYPE_CHOICES, default='free')
     available = models.BooleanField()
 
     def __str__(self):
         return self.name
 
 
-class Recipient(models.Model):
-    name = models.CharField(max_length=255)
-    date_of_birth = models.DateField()
-    contact_information = models.JSONField()
-    address = models.TextField()
-    medical_history = models.TextField()
-    blood_type = models.ForeignKey(
-        BloodType, on_delete=models.CASCADE, related_name='recipients')
-    need_blood = models.BooleanField()
-    preferred_source = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.name
-
-
 class DonationRequest(models.Model):
+    REQUEST_TYPE_CHOICES = [
+        ('individual', 'From Individual (Donor)'),
+        ('blood_bank', 'From Blood Bank'),
+    ]
+
     requester = models.ForeignKey(
-        UserProfile, on_delete=models.CASCADE, related_name='donation_requests')
-    blood_type = models.ForeignKey(
-        BloodType, on_delete=models.CASCADE, related_name='donation_requests')
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name='donation_requests'
+    )
     number_of_pints_needed = models.IntegerField()
     status = models.CharField(max_length=20)
-    # Add other fields as needed
+    donor = models.ForeignKey(
+        Donor,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='donation_requests'
+    )
+    request_type = models.CharField(
+        max_length=15,
+        choices=REQUEST_TYPE_CHOICES,
+        default='individual'
+    )
+    # Other fields as needed
 
     def __str__(self):
-        return f"Donation Request for {self.number_of_pints_needed} pints of {self.blood_type} by {self.requester}"
+        return f"Donation Request for {self.number_of_pints_needed} pints by {self.requester}"
